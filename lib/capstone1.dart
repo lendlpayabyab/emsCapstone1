@@ -149,7 +149,7 @@ void main() {
 
   //to have sample users in list
   if (users.isEmpty){
-    populateUser(users, 20);
+    populateUser(users, 10);
   }
 
   while (isOnPage) {
