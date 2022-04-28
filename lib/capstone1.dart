@@ -34,7 +34,7 @@ void loggedAsAdmin(String session, List<User> user, List<Salary> salary, List<Le
   bool isLoggedIn = true;
   String? userInput;
   while(isLoggedIn){
-    clearConsole();
+    //clearConsole();
     print('\nWelcome, $session!');
 
     print('\n1. Add Users\n'
@@ -45,7 +45,7 @@ void loggedAsAdmin(String session, List<User> user, List<Salary> salary, List<Le
         '6. Manage Leaves\n'
         '7. Logout');
     userInput = stdin.readLineSync();
-    clearConsole();
+    //clearConsole();
     switch (userInput){
       case '7' :{
         isLoggedIn = false;
@@ -107,7 +107,7 @@ void loggedAsUser(String session, List<User> user, List<Leaves> leaves) {
     }
   }
   while (isLoggedIn){
-    clearConsole();
+    //clearConsole();
     print('\nWelcome, ${user[index].firstName} ${user[index].lastName}!');
     print('\n1. View profile\n'
         '2. Request a Leave\n'
@@ -153,7 +153,7 @@ void main() {
   }
 
   while (isOnPage) {
-    clearConsole();
+    //clearConsole();
     print('\n\nWelcome! Do you wish to Log in or Sign up?');
     print('1. Log in\n2. Sign up\n3. Contact us\n4. Quit');
     String? userInput = stdin.readLineSync();

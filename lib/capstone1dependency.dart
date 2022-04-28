@@ -41,7 +41,7 @@ class Leaves {
 
   @override
   String toString() =>
-      'Email: $email | Description: $description | Period: ${start.toString().substring(0,10)} to ${end.toString().substring(0,10)} | Status: $status';
+      'Email: $email | Description: $description | Period: ${start.toString().substring(0, 10)} to ${end.toString().substring(0, 10)} | Status: $status';
 }
 
 class Salary {
@@ -114,11 +114,13 @@ class User extends Person {
     print('Username: $_username');
     print('Email: $email');
     print('\nName: $firstName $lastName');
-    print((gender != null)? 'Gender: $gender' : 'Gender: -');
-    print((birthday != null)? 'Birthday: $birthday' : 'Birthday: -');
-    print((address != null)? 'Address: $address' : 'Address: -');
-    print((contactNumber != null)? 'Contact number: $contactNumber' : 'Contact number: -');
-    print((department != null)? 'Department: $department' : 'Department: -');
+    print((gender != null) ? 'Gender: $gender' : 'Gender: -');
+    print((birthday != null) ? 'Birthday: $birthday' : 'Birthday: -');
+    print((address != null) ? 'Address: $address' : 'Address: -');
+    print((contactNumber != null)
+        ? 'Contact number: $contactNumber'
+        : 'Contact number: -');
+    print((department != null) ? 'Department: $department' : 'Department: -');
   }
 
   String get getUserName {
@@ -136,43 +138,42 @@ bool passwordCheck(Person person, String username, String password) {
   return false;
 }
 
-String loginSequence(List<Admin> admin, List<User> users){
+String loginSequence(List<Admin> admin, List<User> users) {
   bool proceedLogin = false;
   String? username;
   String? password;
 
-  while (!proceedLogin){
+  while (!proceedLogin) {
     String? userInput = '';
     print('\nEnter username:');
     username = stdin.readLineSync();
     print('Enter password:');
     password = stdin.readLineSync();
 
-    for (var element in admin){
+    for (var element in admin) {
       proceedLogin = passwordCheck(element, username!, password!);
-      if(proceedLogin){
+      if (proceedLogin) {
         return 'Administrator';
       }
     }
-    for (var element in users){
+    for (var element in users) {
       proceedLogin = passwordCheck(element, username!, password!);
-      if(proceedLogin){
+      if (proceedLogin) {
         return username;
       }
     }
-    if(!proceedLogin){
+    if (!proceedLogin) {
       print('Username and Password combination does not exist!');
-      while (userInput!.toUpperCase() != 'Y' && userInput.toUpperCase() != 'N'){
+      while (
+          userInput!.toUpperCase() != 'Y' && userInput.toUpperCase() != 'N') {
         print('Try logging in again? Y or N?');
         userInput = stdin.readLineSync();
-        clearConsole();
-        if(userInput!.toUpperCase() == 'Y'){
+        //clearConsole();
+        if (userInput!.toUpperCase() == 'Y') {
           proceedLogin = false;
-        }
-        else if (userInput.toUpperCase() != 'N'){
+        } else if (userInput.toUpperCase() != 'N') {
           print('Invalid input!');
-        }
-        else {
+        } else {
           proceedLogin = true;
         }
       }
@@ -198,8 +199,9 @@ void addUser(List<User> user) {
   }
   print('Enter password:');
   String? password = stdin.readLineSync();
-  while (password == null || password.length < 4){
-    print('Invalid input. Password must be at least 4 characters long. Enter valid password:');
+  while (password == null || password.length < 4) {
+    print(
+        'Invalid input. Password must be at least 4 characters long. Enter valid password:');
     password = stdin.readLineSync();
   }
 
@@ -254,16 +256,16 @@ void addSalary(List<Salary> salary, List<User> user) {
     amount = double.parse(userInput);
   }
 
-  for (var element in user){
-    if (email == element.email){
+  for (var element in user) {
+    if (email == element.email) {
       accountExists = true;
     }
   }
-  if (accountExists){
-    salary.add(Salary(email: email!, month: month!, year: year!, amount: amount!));
+  if (accountExists) {
+    salary.add(
+        Salary(email: email!, month: month!, year: year!, amount: amount!));
     print('Successfully added entry: [${salary.last}]');
-  }
-  else {
+  } else {
     print('User does not exist. Please try again.');
   }
 
@@ -274,9 +276,9 @@ void addSalary(List<Salary> salary, List<User> user) {
 void addLeave(List<Leaves> leaves, String session, List<User> users, [User? user]) {
   bool accountExists = false;
   List<String> statusChoices = ['Pending', 'Approved', 'Rejected'];
-  int? status,day,month,year;
+  int? status, day, month, year;
   String? email;
-  clearConsole();
+  //clearConsole();
   String? userInput;
   DateTime start = DateTime(2, 2, 2);
   DateTime end = DateTime(1, 1, 1);
@@ -287,45 +289,47 @@ void addLeave(List<Leaves> leaves, String session, List<User> users, [User? user
   } else {
     email = user?.email;
   }
-  print('Enter description:');
-  String? description = stdin.readLineSync();
 
-  while (start.compareTo(DateTime.now()) < 1){
-    print('Enter start date (day: DD):');
-    day = inputInteger(2, 1, 31);
-    print('Enter start date (month: MM):');
-    month = inputInteger(2, 1, 12);
-    print('Enter start date (year: YYYY):');
-    year = inputInteger(4);
-    start = DateTime(year!, month!, day!);
-
-    if(start.compareTo(DateTime.now()) < 1){
-      print('Invalid start date. Can only start one day after day of request. Try again.');
-    }
-  }
-
-  while(end.compareTo(start) < 0){
-    print('Enter end date (day: DD):');
-    day = inputInteger(2, 1, 31);
-    print('Enter end date (month: MM):');
-    userInput = stdin.readLineSync();
-    month = inputInteger(2, 1, 12);
-    print('Enter end date (year: YYYY):');
-    year = inputInteger(4);
-    end = DateTime(year!, month!, day!);
-
-    if(end.compareTo(start) < 0){
-      print('Invalid end date. Cannot enter date before start date. Try again.');
-    }
-  }
-
-  for (var element in users){
-    if (email == element.email){
+  for (var element in users) {
+    if (email == element.email) {
       accountExists = true;
     }
   }
 
-  if(accountExists){
+  if (accountExists) {
+    print('Enter description:');
+    String? description = stdin.readLineSync();
+
+    while (start.compareTo(DateTime.now()) < 1) {
+      print('Enter start date (day: DD):');
+      day = inputInteger(2, 1, 31);
+      print('Enter start date (month: MM):');
+      month = inputInteger(2, 1, 12);
+      print('Enter start date (year: YYYY):');
+      year = inputInteger(4);
+      start = DateTime(year!, month!, day!);
+
+      if (start.compareTo(DateTime.now()) < 1) {
+        print(
+            'Invalid start date. Can only start one day after day of request. Try again.');
+      }
+    }
+
+    while (end.compareTo(start) < 0) {
+      print('Enter end date (day: DD):');
+      day = inputInteger(2, 1, 31);
+      print('Enter end date (month: MM):');
+      month = inputInteger(2, 1, 12);
+      print('Enter end date (year: YYYY):');
+      year = inputInteger(4);
+      end = DateTime(year!, month!, day!);
+
+      if (end.compareTo(start) < 0) {
+        print(
+            'Invalid end date. Cannot enter date before start date. Try again.');
+      }
+    }
+
     leaves.add(Leaves(
         email: email!, start: start, end: end, description: description!));
 
@@ -341,8 +345,7 @@ void addLeave(List<Leaves> leaves, String session, List<User> users, [User? user
     }
 
     print('Successfully added an entry in Leaves: [${leaves.last}]');
-  }
-  else {
+  } else {
     print('User does not exist. Please try again');
   }
 
@@ -356,7 +359,7 @@ void viewUsers(List<User> user, List<Leaves> leaves) {
   String? userInput2;
   int? index;
   while (isOnPage) {
-    clearConsole();
+    //clearConsole();
     int i = 1;
     print('\nUsers in database:\n');
     if (user.isNotEmpty) {
@@ -407,7 +410,7 @@ void editUser(List<User> user, int index) {
   bool isOnPage = true;
   String? userInput;
   while (isOnPage) {
-    clearConsole();
+    //clearConsole();
     print('\nEdit current User: ${user[index]._username}\n');
     user[index].showDetails();
     print('\nWhich entry would you like to edit?\n'
@@ -486,7 +489,7 @@ void manageLeaves(List<Leaves> leaves) {
   int? index1;
   int? index2;
   while (isOnPage) {
-    clearConsole();
+    //clearConsole();
     int i = 1;
     if (leaves.isNotEmpty) {
       print('\nLeaves:\n');
@@ -500,35 +503,33 @@ void manageLeaves(List<Leaves> leaves) {
       if (index1 == i) {
         isOnPage = false;
       } else if (index1 < i) {
-        print('Change status or delete entry?\n1. Pending\n2. Approved\n3. Rejected\n4. Delete');
+        print(
+            'Change status or delete entry?\n1. Pending\n2. Approved\n3. Rejected\n4. Delete');
         userInput = stdin.readLineSync();
         index2 = int.parse(userInput!);
-        if (index2 == 4){
+        if (index2 == 4) {
           leaves.removeAt(index1 - 1);
-        }
-        else{
+        } else {
           leaves[index1 - 1].status = statusChoices[index2 - 1];
         }
       } else {
         print('Please enter valid input.');
       }
-    }
-    else {
+    } else {
       print('\nNothing to show here. Going back...');
       isOnPage = false;
     }
-
   }
 }
 
-int? inputInteger(int digits, [int? min, int? max]){
+int? inputInteger(int digits, [int? min, int? max]) {
   String? userInput;
   int? value;
   min ??= -99999999999999;
   max ??= 99999999999999;
   userInput = stdin.readLineSync();
   value = int.parse(userInput!);
-  while (value.toString().length > digits || value! < min || value > max){
+  while (value.toString().length > digits || value! < min || value > max) {
     print('Invalid input. Please try again');
     userInput = stdin.readLineSync();
     value = int.parse(userInput!);
@@ -536,10 +537,9 @@ int? inputInteger(int digits, [int? min, int? max]){
   return value;
 }
 
-
 //to make spaces in the console for a cleaner output
-void clearConsole(){
-  for(int i = 0; i < 50; i++) {
+void clearConsole() {
+  for (int i = 0; i < 50; i++) {
     stdout.writeln();
   }
 }
