@@ -1,6 +1,8 @@
 export 'dart:io';
 import 'dart:io';
 
+import 'package:untitled/capstone1.dart';
+
 class Person {
   late String firstName;
   late String lastName;
@@ -553,3 +555,132 @@ List<Admin> admin = [
     password: '1234',
   )
 ];
+
+List<User> users = [];
+List<Leaves> leaves = [];
+List<Salary> salaries = [];
+
+void adminOrUser(String session, List<User> user, List<Salary> salary, List<Leaves> leaves){
+  if(session == 'Administrator'){
+    _loggedAsAdmin(session, user, salary, leaves);
+  }
+  else if (session == 'Goodbye'){
+    print('Goodbye!\n\n');
+  }
+  else {
+    _loggedAsUser(session, user, leaves);
+  }
+}
+
+void _loggedAsAdmin(String session, List<User> user, List<Salary> salary, List<Leaves> leaves) {
+  bool isLoggedIn = true;
+  String? userInput;
+  while(isLoggedIn){
+    //clearConsole();
+    print('\nWelcome, $session!');
+
+    print('\n1. Add Users\n'
+        '2. Add Salaries\n'
+        '3. Add Leaves\n'
+        '4. View Users\n'
+        '5. Salary Report\n'
+        '6. Manage Leaves\n'
+        '7. Logout');
+    userInput = stdin.readLineSync();
+    //clearConsole();
+    switch (userInput){
+      case '7' :{
+        isLoggedIn = false;
+        main();
+        break;
+      }
+      case '2' :{
+        addSalary(salary, users);
+        break;
+      }
+      case '1' :{
+        addUser(user);
+        break;
+      }
+      case '5' :{
+        if (salary.isEmpty){
+          print('\nNothing to show here.\n');
+        }
+        print('');
+        for(var element in salary){
+          print(element);
+        }
+        print('');
+        print('Press enter to continue..');
+        stdin.readLineSync();
+        break;
+      }
+      case '3' :{
+        addLeave(leaves, session, users);
+        break;
+      }
+      case '4' :{
+        viewUsers(user, leaves);
+        break;
+      }
+      case '6' :{
+        manageLeaves(leaves);
+        break;
+      }
+      default :{
+        print('Please enter valid input.');
+        break;
+      }
+    }
+  }
+
+}
+
+void _loggedAsUser(String session, List<User> user, List<Leaves> leaves) {
+  bool isLoggedIn = true;
+  String? userInput;
+  int index = 0;
+  for (var element in user){
+    if (session == element.getUserName){
+      break;
+    }
+    else {
+      index++;
+    }
+  }
+  while (isLoggedIn){
+    //clearConsole();
+    print('\nWelcome, ${user[index].firstName} ${user[index].lastName}!');
+    print('\n1. View profile\n'
+        '2. Request a Leave\n'
+        '3. View Leaves\n'
+        '4. Logout');
+    userInput = stdin.readLineSync();
+    switch (userInput){
+      case '1' :{
+        editUser(user, index);
+        break;
+      }
+      case '2' :{
+        addLeave(leaves, session, users, user[index]);
+        break;
+      }
+      case '3' :{
+        print('\nYour current active Leave requests:\n');
+        for(var element in leaves){
+          if(element.email == user[index].email){
+            print(element);
+          }
+        }
+        print('\n\nPress enter to continue...');
+        stdin.readLineSync();
+        break;
+      }
+      case '4' :{
+        isLoggedIn = false;
+        main();
+        break;
+      }
+    }
+  }
+}
