@@ -1,16 +1,31 @@
-# untitled
+# Capstone 1
 
-A new Flutter project.
+EMS Console App: capstone1.dart as main file
+and capstone1dependency.dart as imported package.
 
-## Getting Started
+## Overview
 
-This project is a starting point for a Flutter application.
+main page:
 
-A few resources to get you started if this is your first Flutter project:
+- login
+- sign up
+- admin contact
+- exit
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+admin functions:
+- add users
+- add salary
+- add leaves
+- view users
+- salary report
+- manage leaves
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+user functions:
+- view and edit profile
+- request a leave
+- view active leaves
+
+to implement:
+- user worksheets/worktables
+- adding and removing admin accounts
+- more interactive ui/ux
