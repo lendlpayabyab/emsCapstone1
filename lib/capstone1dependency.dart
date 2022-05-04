@@ -682,6 +682,9 @@ void _loggedAsUser(String session, List<User> user, List<Leaves> leaves) {
         main();
         break;
       }
+      default :{
+        print('Invalid input. Try again.');
+        }
     }
   }
 }
