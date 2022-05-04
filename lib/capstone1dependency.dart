@@ -132,6 +132,20 @@ class User extends Person {
   String toString() => 'Name: $firstName $lastName | Email: $email';
 }
 
+List<Admin> admin = [
+  Admin(
+    firstName: 'Lendl',
+    lastName: 'Payabyab',
+    email: 'lendl.payabyab@gmail.com',
+    username: 'lendl',
+    password: '1234',
+  )
+];
+
+List<User> users = [];
+List<Leaves> leaves = [];
+List<Salary> salaries = [];
+
 bool _passwordCheck(Person person, String username, String password) {
   if (person._password == password && person._username == username) {
     return true;
@@ -247,7 +261,7 @@ void _addSalary(List<Salary> salary, List<User> user) {
   print('Enter month:');
   int? month = inputInteger(2, 1, 31);
   print('Enter year:');
-  year = inputInteger(4);
+  year = inputInteger(4, 2022);
   if (userInput != null) {
     year = int.parse(userInput);
   }
@@ -540,26 +554,12 @@ int? inputInteger(int digits, [int? min, int? max]) {
   return value;
 }
 
-//to make spaces in the console for a cleaner output
+//to make spaces in the console for a cleaner output. experimental
 void clearConsole() {
   for (int i = 0; i < 50; i++) {
     stdout.writeln();
   }
 }
-
-List<Admin> admin = [
-  Admin(
-    firstName: 'Lendl',
-    lastName: 'Payabyab',
-    email: 'lendl.payabyab@gmail.com',
-    username: 'lendl',
-    password: '1234',
-  )
-];
-
-List<User> users = [];
-List<Leaves> leaves = [];
-List<Salary> salaries = [];
 
 void adminOrUser(String session, List<User> user, List<Salary> salary, List<Leaves> leaves){
   if(session == 'Administrator'){
