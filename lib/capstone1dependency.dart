@@ -47,7 +47,7 @@ class Leaves {
 
 class Salary {
   late final String email;
-  late final String month;
+  late final int month;
   late final int year;
   late final double amount;
 
@@ -245,9 +245,9 @@ void _addSalary(List<Salary> salary, List<User> user) {
   print('Enter email:');
   String? email = stdin.readLineSync();
   print('Enter month:');
-  String? month = stdin.readLineSync();
+  int? month = inputInteger(2, 1, 31);
   print('Enter year:');
-  userInput = stdin.readLineSync();
+  year = inputInteger(4);
   if (userInput != null) {
     year = int.parse(userInput);
   }
