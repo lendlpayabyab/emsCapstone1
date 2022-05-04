@@ -554,7 +554,7 @@ int? inputInteger(int digits, [int? min, int? max]) {
   return value;
 }
 
-//to make spaces in the console for a cleaner output
+//to make spaces in the console for a cleaner output. experimental
 void clearConsole() {
   for (int i = 0; i < 50; i++) {
     stdout.writeln();
