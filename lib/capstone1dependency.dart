@@ -1,6 +1,5 @@
 export 'dart:io';
 import 'dart:io';
-
 import 'package:untitled/capstone1.dart';
 
 class Person {
@@ -133,7 +132,7 @@ class User extends Person {
   String toString() => 'Name: $firstName $lastName | Email: $email';
 }
 
-bool passwordCheck(Person person, String username, String password) {
+bool _passwordCheck(Person person, String username, String password) {
   if (person._password == password && person._username == username) {
     return true;
   }
@@ -153,13 +152,13 @@ String loginSequence(List<Admin> admin, List<User> users) {
     password = stdin.readLineSync();
 
     for (var element in admin) {
-      proceedLogin = passwordCheck(element, username!, password!);
+      proceedLogin = _passwordCheck(element, username!, password!);
       if (proceedLogin) {
         return 'Administrator';
       }
     }
     for (var element in users) {
-      proceedLogin = passwordCheck(element, username!, password!);
+      proceedLogin = _passwordCheck(element, username!, password!);
       if (proceedLogin) {
         return username;
       }
@@ -229,7 +228,7 @@ void addUser(List<User> user) {
   }
 }
 
-void removeUser(List<User> user, int index, List<Leaves> leaves) {
+void _removeUser(List<User> user, int index, List<Leaves> leaves) {
   print('\nSuccessfully removed ${user[index]}\n');
   leaves.removeWhere((element) => element.email == user[index].email);
   user.remove(user[index]);
@@ -237,7 +236,7 @@ void removeUser(List<User> user, int index, List<Leaves> leaves) {
   stdin.readLineSync();
 }
 
-void addSalary(List<Salary> salary, List<User> user) {
+void _addSalary(List<Salary> salary, List<User> user) {
   bool accountExists = false;
   int? year;
   double? amount;
@@ -275,7 +274,7 @@ void addSalary(List<Salary> salary, List<User> user) {
   stdin.readLineSync();
 }
 
-void addLeave(List<Leaves> leaves, String session, List<User> users, [User? user]) {
+void _addLeave(List<Leaves> leaves, String session, List<User> users, [User? user]) {
   bool accountExists = false;
   List<String> statusChoices = ['Pending', 'Approved', 'Rejected'];
   int? status, day, month, year;
@@ -355,7 +354,7 @@ void addLeave(List<Leaves> leaves, String session, List<User> users, [User? user
   stdin.readLineSync();
 }
 
-void viewUsers(List<User> user, List<Leaves> leaves) {
+void _viewUsers(List<User> user, List<Leaves> leaves) {
   bool isOnPage = true;
   String? userInput;
   String? userInput2;
@@ -385,7 +384,7 @@ void viewUsers(List<User> user, List<Leaves> leaves) {
         if (index! + 1 >= i) {
           print('Please enter valid input');
         } else {
-          removeUser(user, index, leaves);
+          _removeUser(user, index, leaves);
         }
       } else if (userInput == '1') {
         print('Please select User number to edit.');
@@ -396,7 +395,7 @@ void viewUsers(List<User> user, List<Leaves> leaves) {
         if (index! + 1 >= i) {
           print('Please enter valid input');
         } else {
-          editUser(user, index);
+          _editUser(user, index);
         }
       } else {
         print('Please enter valid input.');
@@ -408,7 +407,7 @@ void viewUsers(List<User> user, List<Leaves> leaves) {
   }
 }
 
-void editUser(List<User> user, int index) {
+void _editUser(List<User> user, int index) {
   bool isOnPage = true;
   String? userInput;
   while (isOnPage) {
@@ -484,7 +483,7 @@ void editUser(List<User> user, int index) {
   }
 }
 
-void manageLeaves(List<Leaves> leaves) {
+void _manageLeaves(List<Leaves> leaves) {
   List<String> statusChoices = ['Pending', 'Approved', 'Rejected'];
   bool isOnPage = true;
   String? userInput;
@@ -518,7 +517,9 @@ void manageLeaves(List<Leaves> leaves) {
         print('Please enter valid input.');
       }
     } else {
-      print('\nNothing to show here. Going back...');
+      print('\nNothing to show here.');
+      print('Press enter to continue..');
+      stdin.readLineSync();
       isOnPage = false;
     }
   }
@@ -595,7 +596,7 @@ void _loggedAsAdmin(String session, List<User> user, List<Salary> salary, List<L
         break;
       }
       case '2' :{
-        addSalary(salary, users);
+        _addSalary(salary, users);
         break;
       }
       case '1' :{
@@ -616,15 +617,15 @@ void _loggedAsAdmin(String session, List<User> user, List<Salary> salary, List<L
         break;
       }
       case '3' :{
-        addLeave(leaves, session, users);
+        _addLeave(leaves, session, users);
         break;
       }
       case '4' :{
-        viewUsers(user, leaves);
+        _viewUsers(user, leaves);
         break;
       }
       case '6' :{
-        manageLeaves(leaves);
+        _manageLeaves(leaves);
         break;
       }
       default :{
@@ -658,11 +659,11 @@ void _loggedAsUser(String session, List<User> user, List<Leaves> leaves) {
     userInput = stdin.readLineSync();
     switch (userInput){
       case '1' :{
-        editUser(user, index);
+        _editUser(user, index);
         break;
       }
       case '2' :{
-        addLeave(leaves, session, users, user[index]);
+        _addLeave(leaves, session, users, user[index]);
         break;
       }
       case '3' :{
